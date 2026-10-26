@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nusa Orders</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2312241a'/%3E%3Cpath d='M32 10 54 32 32 54 10 32Z' fill='none' stroke='%23cfaa64' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--night:#0b1610;--forest:#12241a;--cream:#f1eadc;--paper:#f8f4ec;--card:#fffdf8;--gold:#cfaa64;--gold-deep:#8d6a2c;--ink:#18231c;--mute:#6b7469;--line:#e6dfcf;--ok:#2f6b46;--okbg:#e3efe5;--newbg:#f6ead0;--bad:#9a3b2e}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--paper:#0f1a13;--card:#16241b;--ink:#efe8d8;--mute:#9aa496;--line:#26362b;--okbg:#1d3a2a;--ok:#8fd0a3;--newbg:#3a3019;--gold-deep:#e0bd78}}
+*{box-sizing:border-box;margin:0}
+html,body{background:var(--paper);color:var(--ink);font:16px/1.45 'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+.serif{font-family:'Bodoni Moda',Georgia,serif;font-weight:500}
+.hide{display:none!important}
+
+/* login */
+#login{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(900px 500px at 50% 0,#1d3a29,var(--night));color:var(--cream)}
+#login form{width:100%;max-width:340px;text-align:center}
+#login h1{font-size:64px;letter-spacing:.01em;margin-bottom:6px}
+#login p{color:#b9b39f;margin-bottom:28px}
+#login input{width:100%;padding:15px 16px;border-radius:12px;border:1px solid #2d4636;background:#0e1c14;color:var(--cream);font-size:17px;text-align:center;margin-bottom:12px}
+#login input:focus{outline:2px solid var(--gold);outline-offset:1px}
+.go{width:100%;padding:15px;border-radius:12px;background:var(--gold);color:#1b1407;font-weight:600;font-size:17px}
+#err{color:#e8a597;min-height:22px;margin-top:10px;font-size:14px}
+#login small{display:block;margin-top:22px;color:#7f8a7c}
+
+/* shell */
+header{position:sticky;top:0;z-index:5;background:var(--forest);color:var(--cream)}
+.bar{max-width:760px;margin:0 auto;padding:14px 16px 0;display:flex;align-items:center;justify-content:space-between}
+.bar .serif{font-size:28px}
+.bar button{color:#b9b39f;font-size:14px;padding:6px 2px}
+nav{max-width:760px;margin:0 auto;display:flex;gap:4px;padding:6px 10px 0}
+nav button{flex:1;padding:12px 6px 13px;color:#a9b3a5;font-weight:500;font-size:16px;border-bottom:3px solid transparent}
+nav button.on{color:var(--cream);border-color:var(--gold)}
+nav .dot{display:inline-block;min-width:20px;padding:0 6px;margin-left:6px;border-radius:99px;background:var(--gold);color:#1b1407;font-size:12px;font-weight:600;line-height:20px}
+main{max-width:760px;margin:0 auto;padding:20px 16px 120px}
+.hello{margin:4px 0 22px}
+.hello h2{font-size:30px;line-height:1.15}
+.hello p{color:var(--mute);margin-top:4px}
+
+/* groups */
+.grp{margin-bottom:30px}
+.gh{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
+.gh h3{font-size:21px}
+.gh span{color:var(--mute);font-size:14px}
+.gh .prep{color:var(--gold-deep);font-weight:600;font-size:14px;padding:4px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px}
+.row{display:flex;gap:12px;align-items:center;padding:14px 14px 14px 16px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .who{flex:1;min-width:0;text-align:left}
+.who b{display:block;font-weight:600;font-size:17px}
+.who span{display:block;color:var(--mute);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.amt{font-weight:600;white-space:nowrap}
+.tag{font-size:13px;font-weight:600;color:var(--gold-deep)}
+.tag.ok{color:var(--ok)}
+.act{padding:11px 16px;border-radius:11px;background:var(--forest);color:var(--cream);font-weight:600;font-size:15px;white-space:nowrap}
+.act.alt{background:var(--ok);color:#fff}
+.act.quiet{background:transparent;color:var(--mute);border:1px solid var(--line)}
+.prepbox{padding:14px 16px;background:var(--newbg);border-radius:12px;margin-bottom:10px;font-size:15px}
+.prepbox div{display:flex;justify-content:space-between;padding:3px 0}
+.prepbox b{font-weight:600}
+.empty{padding:34px 20px;text-align:center;color:var(--mute)}
+.more{display:block;margin:6px auto 0;color:var(--mute);font-size:14px;padding:10px}
+.fab{position:fixed;right:max(16px,calc(50% - 364px));bottom:20px;z-index:6;padding:16px 22px;border-radius:99px;background:var(--gold);color:#1b1407;font-weight:600;font-size:16px;box-shadow:0 10px 30px rgba(0,0,0,.28)}
+
+/* catering */
+.crow{width:100%;display:flex;gap:12px;align-items:center;padding:16px;border-top:1px solid var(--line);text-align:left}
+.crow:first-child{border-top:0}
+.crow .who{flex:1}
+.pill{font-size:13px;font-weight:600;padding:4px 11px;border-radius:99px;background:var(--newbg);color:var(--gold-deep);white-space:nowrap}
+.pill.ok{background:var(--okbg);color:var(--ok)}
+.pill.mute{background:var(--line);color:var(--mute)}
+
+/* menu */
+.mrow{display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid var(--line)}
+.mrow:first-child{border-top:0}
+.mrow .who{flex:1}
+.sw{width:54px;height:32px;border-radius:99px;background:var(--ok);position:relative;transition:background .2s;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:25px;width:26px;height:26px;border-radius:50%;background:#fff;transition:left .2s}
+.sw.off{background:#b9b2a2}
+.sw.off::after{left:3px}
+
+/* sheet */
+#veil{position:fixed;inset:0;background:rgba(5,10,7,.55);z-index:20;opacity:0;pointer-events:none;transition:opacity .2s}
+#veil.on{opacity:1;pointer-events:auto}
+#sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;max-height:92vh;overflow:auto;background:var(--paper);border-radius:22px 22px 0 0;transform:translateY(105%);transition:transform .28s cubic-bezier(.2,.8,.2,1);max-width:640px;margin:0 auto;padding:22px 18px 28px}
+#sheet.on{transform:none}
+#sheet h3{font-size:26px;margin-bottom:4px}
+.sub{color:var(--mute);margin-bottom:16px}
+label{display:block;font-weight:600;font-size:14px;margin:14px 0 6px}
+input[type=text],input[type=tel],input[type=number],input[type=date],select,textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:16px}
+textarea{min-height:84px;resize:vertical}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{flex:1;min-width:84px;padding:12px 8px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-weight:500}
+.seg button.on{background:var(--forest);color:var(--cream);border-color:var(--forest)}
+.step{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line)}
+.step:first-of-type{border-top:0}
+.step .who{flex:1}
+.step .q{display:flex;align-items:center;gap:10px}
+.step .q button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);font-size:20px;line-height:1}
+.step .q b{min-width:18px;text-align:center}
+.list{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 14px;max-height:300px;overflow:auto}
+.facts{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px 16px;margin-bottom:6px}
+.facts div{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-top:1px solid var(--line)}
+.facts div:first-child{border-top:0}
+.facts span{color:var(--mute)}
+.facts b{font-weight:500;text-align:right}
+.foot{display:flex;gap:10px;margin-top:20px}
+.foot .go{flex:1}
+.foot .quiet{padding:15px 18px;border-radius:12px;border:1px solid var(--line);font-weight:600;color:var(--bad)}
+.links{display:flex;gap:10px;margin:12px 0 2px}
+.links a{flex:1;text-align:center;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;font-weight:600}
+#toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);background:var(--night);color:var(--cream);padding:12px 18px;border-radius:12px;z-index:30;opacity:0;transition:.25s;pointer-events:none;font-size:15px}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.note{text-align:center;color:var(--mute);font-size:13px;margin-top:30px}
+.note button{color:var(--gold-deep);font-weight:600;font-size:13px;text-decoration:underline}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<section id="login">
+  <form id="lf" autocomplete="off">
+    <h1 class="serif">Nusa</h1>
+    <p>Orders for the kitchen</p>
+    <input id="pw" type="password" placeholder="Password" aria-label="Password" autocomplete="current-password">
+    <button class="go" type="submit">Open</button>
+    <div id="err" role="alert"></div>
+    <small>Preview password: nusa2026</small>
+  </form>
+</section>
+
+<div id="app" class="hide">
+  <header>
+    <div class="bar"><div class="serif">Nusa</div><button data-act="out">Sign out</button></div>
+    <nav id="tabs">
+      <button data-tab="orders">Orders<span class="dot" id="c1"></span></button>
+      <button data-tab="catering">Catering<span class="dot" id="c2"></span></button>
+      <button data-tab="menu">Menu</button>
+    </nav>
+  </header>
+  <main id="view"></main>
+  <button class="fab" id="fab" data-act="add">+ New order</button>
+</div>
+
+<div id="veil" data-act="close"></div>
+<div id="sheet" role="dialog" aria-modal="true"></div>
+<div id="toast" role="status"></div>
+
+<script>
+(function(){
+var PW='nusa2026';
+var MENU=[
+ ['1000 Layer Cake (slice)',26],['Pandan Chiffon Cake',10],['Klepon Cake',9.5],['Mochi Layer Cake',9.5],
+ ['Sweet Rice Pandan Custard',8],['Cassava Brulee',5],['Mochi Bar',6.5],['Lemper Ayam',15],
+ ["Chef's Sampler",14.95],['Beef Rendang (tray)',30],['Jackfruit Rendang (tray)',30],['Pastel (3)',10.5],['Acar',4.95]
+];
+var PRICE={};MENU.forEach(function(m){PRICE[m[0]]=m[1]});
+var METHODS={
+ market:{name:'Farmers market',place:'Ferry Building, stand 50',dow:6},
+ kitchen:{name:'Kitchen pickup',place:'3450 3rd St, Ste 4A',dow:4},
+ hub:{name:'HubShop',place:'HubShop locker',dow:6},
+ delivery:{name:'Delivery',place:'Neon delivery',dow:6}
+};
+var CSTAT=['new','quoted','confirmed','done'];
+var CLAB={new:'New request',quoted:'Quote sent',confirmed:'Confirmed',done:'Delivered'};
+var CNEXT={new:'Send quote',quoted:'Mark confirmed',confirmed:'Mark delivered'};
+var KEY='nusa-dash-v1';
+
+function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function nextDow(dow,plus){var d=new Date();d.setHours(12,0,0,0);while(d.getDay()!==dow)d.setDate(d.getDate()+1);d.setDate(d.getDate()+(plus||0));return iso(d)}
+function plusDays(n){var d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+n);return iso(d)}
+function parse(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2],12)}
+function fmtDay(s){return parse(s).toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'})}
+function fmtShort(s){return parse(s).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}
+function money(n){return '$'+(Math.round(n*100)/100).toFixed(n%1?2:0)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function tot(o){return o.items.reduce(function(a,i){return a+i.q*i.p},0)}
+function it(n,q){return {n:n,q:q,p:PRICE[n]}}
+
+function seed(){
+ var sat=nextDow(6),thu=nextDow(4),sat2=nextDow(6,7);
+ return {
+  orders:[
+   {id:1,name:'Maya Lin',phone:'415-555-0142',method:'market',when:sat,items:[it('1000 Layer Cake (slice)',2),it('Pandan Chiffon Cake',1)],paid:true,status:'new',note:''},
+   {id:2,name:'Daniel Ortiz',phone:'510-555-0188',method:'market',when:sat,items:[it("Chef's Sampler",1),it('Mochi Bar',3)],paid:true,status:'new',note:''},
+   {id:3,name:'Priya Shah',phone:'628-555-0120',method:'market',when:sat,items:[it('Beef Rendang (tray)',1),it('Acar',1)],paid:true,status:'ready',note:'Bring extra rice please'},
+   {id:4,name:'Tom Becker',phone:'415-555-0199',method:'kitchen',when:thu,items:[it('Sweet Rice Pandan Custard',4),it('Cassava Brulee',4)],paid:true,status:'new',note:''},
+   {id:5,name:'Aiko Tanaka',phone:'415-555-0176',method:'kitchen',when:thu,items:[it('Lemper Ayam',1),it('Pastel (3)',2)],paid:false,status:'new',note:'Pays at pickup'},
+   {id:6,name:'Rosa Delgado',phone:'650-555-0133',method:'delivery',when:thu,items:[it('Mochi Layer Cake',2),it('Jackfruit Rendang (tray)',1)],paid:true,status:'new',note:'Leave with front desk'},
+   {id:7,name:'Chris Wu',phone:'415-555-0111',method:'hub',when:sat,items:[it('Pandan Chiffon Cake',2)],paid:true,status:'new',note:''},
+   {id:8,name:'Grace Park',phone:'415-555-0154',method:'market',when:sat2,items:[it('1000 Layer Cake (slice)',4)],paid:true,status:'new',note:'Birthday gift, wrap nicely'}
+  ],
+  catering:[
+   {id:1,name:'Northbeam Studio',contact:'Jules Hart',phone:'415-555-0101',email:'jules@northbeam.example',event:'Team lunch',date:plusDays(12),guests:40,type:'Delivery',diet:'4 vegetarian, 1 nut allergy',budget:'',notes:'Office near Embarcadero, drop off by 11:30.',quote:'',status:'new'},
+   {id:2,name:'Lestari Wedding',contact:'Dewi Lestari',phone:'510-555-0166',email:'dewi@lestari.example',event:'Wedding dessert table',date:plusDays(34),guests:120,type:'Pickup',diet:'Halal',budget:'$1,800',notes:'Wants the 1000 layer cake as centerpiece.',quote:'$1,720',status:'quoted'},
+   {id:3,name:'Mission Library Friends',contact:'Sam Ortega',phone:'415-555-0123',email:'sam@mlf.example',event:'Fundraiser night',date:plusDays(6),guests:60,type:'Delivery',diet:'None',budget:'',notes:'Dessert boxes, individually packed.',quote:'$900',status:'confirmed'},
+   {id:4,name:'Oakline Dental',contact:'Hana Cho',phone:'510-555-0148',email:'hana@oakline.example',event:'Staff party',date:plusDays(-9),guests:25,type:'Pickup',diet:'None',budget:'',notes:'',quote:'$410',status:'done'}
+  ],
+  soldout:{'Klepon Cake':true},
+  nid:100
+ };
+}
+var S;
+try{S=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){S=null}
+if(!S||!S.orders)S=seed();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+var tab='orders',showDone=false,openPrep={},draft=null;
+var $=function(s){return document.querySelector(s)};
+var view=$('#view'),sheet=$('#sheet'),veil=$('#veil');
+
+function toast(t){var e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove('on')},1800)}
+
+/* ---------- orders ---------- */
+function renderOrders(){
+ var open=S.orders.filter(function(o){return o.status!=='done'});
+ var done=S.orders.filter(function(o){return o.status==='done'});
+ var toPack=open.filter(function(o){return o.status==='new'}).length;
+ var h='<div class="hello"><h2 class="serif">'+(open.length?open.length+' open order'+(open.length>1?'s':''):'All caught up')+'</h2><p>'+(toPack?toPack+' still to pack':'Everything is packed')+'</p></div>';
+ var groups={};
+ open.forEach(function(o){var k=o.when+'|'+o.method;(groups[k]=groups[k]||[]).push(o)});
+ var keys=Object.keys(groups).sort();
+ if(!keys.length)h+='<div class="card empty">No open orders. Tap New order to add one.</div>';
+ keys.forEach(function(k){
+  var list=groups[k],m=METHODS[list[0].method],total=list.reduce(function(a,o){return a+tot(o)},0);
+  h+='<section class="grp"><div class="gh"><h3 class="serif">'+fmtDay(list[0].when)+'</h3><button class="prep" data-act="prep" data-k="'+k+'">'+(openPrep[k]?'Hide pack list':'Pack list')+'</button></div>';
+  h+='<div class="gh" style="margin-top:-6px"><span>'+m.name+', '+m.place+'</span><span>'+list.length+' order'+(list.length>1?'s':'')+', '+money(total)+'</span></div>';
+  if(openPrep[k]){
+   var sums={};list.forEach(function(o){o.items.forEach(function(i){sums[i.n]=(sums[i.n]||0)+i.q})});
+   h+='<div class="prepbox">'+Object.keys(sums).map(function(n){return '<div><span>'+esc(n)+'</span><b>'+sums[n]+'</b></div>'}).join('')+'</div>';
+  }
+  h+='<div class="card">';
+  list.forEach(function(o){
+   var next=o.status==='new'?['Ready','act']:['Picked up','act alt'];
+   if(o.method==='delivery'&&o.status==='ready')next=['Delivered','act alt'];
+   h+='<div class="row"><button class="who" data-act="order" data-id="'+o.id+'"><b>'+esc(o.name)+'</b><span>'+o.items.map(function(i){return i.q+' '+esc(i.n)}).join(', ')+'</span>'+
+    '<span><span class="tag'+(o.paid?' ok':'')+'" style="display:inline">'+(o.paid?'Paid':'Not paid')+'</span>'+(o.status==='ready'?' &nbsp;<span class="tag ok" style="display:inline">Ready</span>':'')+'</span></button>'+
+    '<div class="amt">'+money(tot(o))+'</div><button class="'+next[1]+'" data-act="adv" data-id="'+o.id+'">'+next[0]+'</button></div>';
+  });
+  h+='</div></section>';
+ });
+ if(done.length){
+  h+='<button class="more" data-act="done">'+(showDone?'Hide':'Show')+' '+done.length+' finished</button>';
+  if(showDone)h+='<div class="card">'+done.map(function(o){return '<div class="row"><button class="who" data-act="order" data-id="'+o.id+'"><b>'+esc(o.name)+'</b><span>'+fmtShort(o.when)+', '+METHODS[o.method].name+'</span></button><div class="amt">'+money(tot(o))+'</div><button class="act quiet" data-act="undo" data-id="'+o.id+'">Undo</button></div>'}).join('')+'</div>';
+ }
+ return h;
+}
+
+/* ---------- catering ---------- */
+function renderCatering(){
+ var open=S.catering.filter(function(c){return c.status!=='done'}).sort(function(a,b){return a.date<b.date?-1:1});
+ var done=S.catering.filter(function(c){return c.status==='done'});
+ var n=S.catering.filter(function(c){return c.status==='new'}).length;
+ var h='<div class="hello"><h2 class="serif">'+(n?n+' new request'+(n>1?'s':''):'Catering')+'</h2><p>'+(open.length?open.length+' event'+(open.length>1?'s':'')+' coming up':'No upcoming events')+'</p></div>';
+ if(!open.length)h+='<div class="card empty">No catering requests right now.</div>';
+ else h+='<div class="card">'+open.map(crow).join('')+'</div>';
+ if(done.length){
+  h+='<button class="more" data-act="done">'+(showDone?'Hide':'Show')+' '+done.length+' delivered</button>';
+  if(showDone)h+='<div class="card">'+done.map(crow).join('')+'</div>';
+ }
+ return h;
+}
+function crow(c){
+ var cls=c.status==='confirmed'?'ok':c.status==='done'?'mute':'';
+ return '<button class="crow" data-act="cat" data-id="'+c.id+'"><div class="who"><b>'+esc(c.event)+'</b><span>'+esc(c.name)+', '+c.guests+' guests</span><span>'+fmtShort(c.date)+', '+c.type.toLowerCase()+'</span></div>'+
+  (c.quote?'<div class="amt">'+esc(c.quote)+'</div>':'')+'<span class="pill '+cls+'">'+CLAB[c.status]+'</span></button>';
+}
+
+/* ---------- menu ---------- */
+function renderMenu(){
+ var out=Object.keys(S.soldout).filter(function(k){return S.soldout[k]}).length;
+ var h='<div class="hello"><h2 class="serif">Menu</h2><p>'+(out?out+' sold out right now':'Everything is available')+'. Flip a switch and the website updates.</p></div><div class="card">';
+ MENU.forEach(function(m){
+  var off=S.soldout[m[0]];
+  h+='<div class="mrow"><div class="who"><b>'+esc(m[0])+'</b><span>'+(off?'Sold out':'Available')+', from '+money(m[1])+'</span></div><button class="sw'+(off?' off':'')+'" role="switch" aria-checked="'+(!off)+'" aria-label="'+esc(m[0])+'" data-act="sold" data-n="'+esc(m[0])+'"></button></div>';
+ });
+ return h+'</div>';
+}
+
+function render(){
+ view.innerHTML=tab==='orders'?renderOrders():tab==='catering'?renderCatering():renderMenu();
+ document.querySelectorAll('#tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.tab===tab)});
+ var c1=S.orders.filter(function(o){return o.status==='new'}).length,c2=S.catering.filter(function(c){return c.status==='new'}).length;
+ $('#c1').textContent=c1;$('#c1').classList.toggle('hide',!c1);
+ $('#c2').textContent=c2;$('#c2').classList.toggle('hide',!c2);
+ $('#fab').classList.toggle('hide',tab==='menu');
+ $('#fab').textContent=tab==='catering'?'+ New request':'+ New order';
+ view.insertAdjacentHTML('beforeend','<p class="note">Sample orders for preview. <button data-act="reset">Reset sample data</button></p>');
+}
+
+/* ---------- sheets ---------- */
+function open(html){sheet.innerHTML='<button data-act="close" style="float:right;color:var(--mute);font-weight:600;padding:4px 0">Close</button>'+html;sheet.classList.add('on');veil.classList.add('on');sheet.scrollTop=0}
+function close(){sheet.classList.remove('on');veil.classList.remove('on');draft=null}
+
+function orderSheet(id){
+ var o=S.orders.find(function(x){return x.id==id}),m=METHODS[o.method];
+ open('<h3 class="serif">'+esc(o.name)+'</h3><p class="sub">'+fmtDay(o.when)+', '+m.name+'</p>'+
+  '<div class="facts">'+o.items.map(function(i){return '<div><span>'+i.q+' x '+esc(i.n)+'</span><b>'+money(i.q*i.p)+'</b></div>'}).join('')+'<div><span>Total</span><b>'+money(tot(o))+'</b></div><div><span>Payment</span><b>'+(o.paid?'Paid online':'Not paid yet')+'</b></div>'+(o.note?'<div><span>Note</span><b>'+esc(o.note)+'</b></div>':'')+'</div>'+
+  '<div class="links"><a href="tel:'+esc(o.phone)+'">Call '+esc(o.phone)+'</a></div>'+
+  '<div class="foot"><button class="quiet" data-act="del" data-id="'+o.id+'">Delete</button>'+(o.paid?'':'<button class="go" style="background:var(--ok);color:#fff" data-act="paid" data-id="'+o.id+'">Mark paid</button>')+'<button class="go" data-act="close">Close</button></div>');
+}
+
+function addOrderSheet(){
+ if(!draft)draft={method:'market',items:{}};
+ var m=METHODS[draft.method],d=draft;
+ var dt=nextDow(m.dow);
+ var count=0,sum=0;Object.keys(d.items).forEach(function(k){count+=d.items[k];sum+=d.items[k]*PRICE[k]});
+ open('<h3 class="serif">New order</h3><p class="sub">For a phone call, a text, or someone at the stand.</p>'+
+  '<label>Name</label><input type="text" id="f-name" value="'+esc(d.name||'')+'" placeholder="Customer name">'+
+  '<label>Phone</label><input type="tel" id="f-phone" value="'+esc(d.phone||'')+'" placeholder="Optional">'+
+  '<label>How are they getting it</label><div class="seg">'+Object.keys(METHODS).map(function(k){return '<button data-act="meth" data-k="'+k+'" class="'+(k===d.method?'on':'')+'">'+METHODS[k].name+'</button>'}).join('')+'</div>'+
+  '<label>Day</label><input type="date" id="f-date" value="'+(d.when||dt)+'">'+
+  '<label>Items</label><div class="list">'+MENU.map(function(mm){var q=d.items[mm[0]]||0;return '<div class="step"><div class="who"><b>'+esc(mm[0])+'</b><span style="color:var(--mute);font-size:14px">'+money(mm[1])+'</span></div><div class="q"><button data-act="dec" data-n="'+esc(mm[0])+'" aria-label="Less">-</button><b>'+q+'</b><button data-act="inc" data-n="'+esc(mm[0])+'" aria-label="More">+</button></div></div>'}).join('')+'</div>'+
+  '<label>Note</label><input type="text" id="f-note" value="'+esc(d.note||'')+'" placeholder="Optional">'+
+  '<label style="display:flex;gap:10px;align-items:center;font-weight:500"><input type="checkbox" id="f-paid"'+(d.paid?' checked':'')+' style="width:20px;height:20px"> Already paid</label>'+
+  '<div class="foot"><button class="go" data-act="saveorder">Add order'+(count?', '+money(sum):'')+'</button></div>');
+}
+function keepDraft(){
+ if(!draft)return;var g=function(i){var e=document.getElementById(i);return e?e.value:''};
+ draft.name=g('f-name');draft.phone=g('f-phone');draft.note=g('f-note');draft.when=g('f-date')||draft.when;
+ var p=document.getElementById('f-paid');if(p)draft.paid=p.checked;
+}
+
+function catSheet(id){
+ var c=S.catering.find(function(x){return x.id==id});
+ open('<h3 class="serif">'+esc(c.event)+'</h3><p class="sub">'+esc(c.name)+'</p>'+
+  '<div class="facts"><div><span>Date</span><b>'+fmtDay(c.date)+'</b></div><div><span>Guests</span><b>'+c.guests+'</b></div><div><span>Pickup or delivery</span><b>'+esc(c.type)+'</b></div><div><span>Dietary</span><b>'+esc(c.diet||'None')+'</b></div>'+(c.budget?'<div><span>Budget</span><b>'+esc(c.budget)+'</b></div>':'')+'<div><span>Contact</span><b>'+esc(c.contact||'')+'</b></div></div>'+
+  '<div class="links"><a href="tel:'+esc(c.phone)+'">Call</a><a href="mailto:'+esc(c.email)+'">Email</a></div>'+
+  '<label>Status</label><div class="seg">'+CSTAT.map(function(s){return '<button data-act="cstat" data-id="'+c.id+'" data-s="'+s+'" class="'+(c.status===s?'on':'')+'">'+CLAB[s]+'</button>'}).join('')+'</div>'+
+  '<label>Your quote</label><input type="text" id="c-quote" value="'+esc(c.quote)+'" placeholder="$0">'+
+  '<label>Notes</label><textarea id="c-notes" placeholder="Menu, timing, delivery details">'+esc(c.notes)+'</textarea>'+
+  '<div class="foot"><button class="quiet" data-act="cdel" data-id="'+c.id+'">Delete</button><button class="go" data-act="csave" data-id="'+c.id+'">Save</button></div>');
+}
+function addCatSheet(){
+ open('<h3 class="serif">New catering request</h3><p class="sub">For an inquiry that came by phone or email.</p>'+
+  '<label>Event</label><input type="text" id="n-event" placeholder="Team lunch, wedding, party">'+
+  '<label>Customer</label><input type="text" id="n-name" placeholder="Name or company">'+
+  '<label>Phone</label><input type="tel" id="n-phone">'+
+  '<label>Event date</label><input type="date" id="n-date" value="'+plusDays(14)+'">'+
+  '<label>Guests</label><input type="number" id="n-guests" value="20" min="1" inputmode="numeric">'+
+  '<label>Pickup or delivery</label><select id="n-type"><option>Pickup</option><option>Delivery</option></select>'+
+  '<label>Dietary needs</label><input type="text" id="n-diet" placeholder="Optional">'+
+  '<div class="foot"><button class="go" data-act="csaveNew">Add request</button></div>');
+}
+
+/* ---------- actions ---------- */
+function find(id){return S.orders.find(function(o){return o.id==id})}
+document.addEventListener('click',function(e){
+ var t=e.target.closest('[data-act],[data-tab]');if(!t)return;
+ if(t.dataset.tab){tab=t.dataset.tab;showDone=false;render();window.scrollTo(0,0);return}
+ var a=t.dataset.act,id=t.dataset.id;
+ if(a==='close'){close();return}
+ if(a==='out'){sessionStorage.removeItem('nusa-in');location.reload();return}
+ if(a==='done'){showDone=!showDone;render();return}
+ if(a==='prep'){openPrep[t.dataset.k]=!openPrep[t.dataset.k];render();return}
+ if(a==='reset'){S=seed();save();render();toast('Sample data restored');return}
+ if(a==='sold'){var n=t.dataset.n;S.soldout[n]=!S.soldout[n];save();render();toast(n+(S.soldout[n]?' marked sold out':' is available'));return}
+ if(a==='adv'){var o=find(id);o.status=o.status==='new'?'ready':'done';save();render();toast(o.status==='ready'?o.name+' is ready':o.name+' finished');return}
+ if(a==='undo'){find(id).status='ready';save();render();return}
+ if(a==='order'){orderSheet(id);return}
+ if(a==='paid'){find(id).paid=true;save();close();render();toast('Marked paid');return}
+ if(a==='del'){S.orders=S.orders.filter(function(o){return o.id!=id});save();close();render();toast('Order removed');return}
+ if(a==='add'){if(tab==='catering')addCatSheet();else{draft=null;addOrderSheet()}return}
+ if(a==='meth'){keepDraft();draft.method=t.dataset.k;draft.when=nextDow(METHODS[draft.method].dow);addOrderSheet();return}
+ if(a==='inc'||a==='dec'){keepDraft();var n2=t.dataset.n,q=(draft.items[n2]||0)+(a==='inc'?1:-1);if(q<=0)delete draft.items[n2];else draft.items[n2]=q;var st=sheet.scrollTop;addOrderSheet();sheet.scrollTop=st;return}
+ if(a==='saveorder'){
+  keepDraft();var items=Object.keys(draft.items).map(function(k){return it(k,draft.items[k])});
+  if(!draft.name.trim()){toast('Add a name first');return}
+  if(!items.length){toast('Add at least one item');return}
+  S.orders.push({id:++S.nid,name:draft.name.trim(),phone:draft.phone||'',method:draft.method,when:draft.when||nextDow(METHODS[draft.method].dow),items:items,paid:!!draft.paid,status:'new',note:draft.note||''});
+  save();close();tab='orders';render();toast('Order added');return}
+ if(a==='cat'){catSheet(id);return}
+ if(a==='cstat'){var c=S.catering.find(function(x){return x.id==id});c.quote=document.getElementById('c-quote').value;c.notes=document.getElementById('c-notes').value;c.status=t.dataset.s;save();catSheet(id);render();return}
+ if(a==='csave'){var c2=S.catering.find(function(x){return x.id==id});c2.quote=document.getElementById('c-quote').value;c2.notes=document.getElementById('c-notes').value;save();close();render();toast('Saved');return}
+ if(a==='cdel'){S.catering=S.catering.filter(function(x){return x.id!=id});save();close();render();toast('Request removed');return}
+ if(a==='csaveNew'){
+  var v=function(i){return document.getElementById(i).value};
+  if(!v('n-event').trim()||!v('n-name').trim()){toast('Add the event and customer');return}
+  S.catering.push({id:++S.nid,name:v('n-name').trim(),contact:v('n-name').trim(),phone:v('n-phone'),email:'',event:v('n-event').trim(),date:v('n-date'),guests:+v('n-guests')||0,type:v('n-type'),diet:v('n-diet'),budget:'',notes:'',quote:'',status:'new'});
+  save();close();render();toast('Request added');return}
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+
+/* ---------- login ---------- */
+function enter(){$('#login').classList.add('hide');$('#app').classList.remove('hide');render()}
+$('#lf').addEventListener('submit',function(e){
+ e.preventDefault();
+ if($('#pw').value.trim()===PW){try{sessionStorage.setItem('nusa-in','1')}catch(x){}enter()}
+ else{$('#err').textContent='That password is not right.'}
+});
+var ok=false;try{ok=sessionStorage.getItem('nusa-in')==='1'}catch(e){}
+if(ok)enter();
+})();
+</script>
+</body>
+</html>
