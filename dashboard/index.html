@@ -11,7 +11,7 @@
 <style>
 :root{
  --night:#0b1610;--forest:#12241a;--forest-2:#1b3526;--gold:#cfaa64;--gold-deep:#8d6a2c;--leaf:#2f6b46;
- --bg:#f8f4ec;--card:#fffdf8;--soft:#f1eadc;--soft-2:#e9e0cc;--ink:#18231c;--mute:#666e63;--line:#e3dbc9;
+ --bg:#ffffff;--card:#ffffff;--soft:#f1f6f0;--soft-2:#e2ebe0;--ink:#18231c;--mute:#5f6a60;--line:#e4ebe2;
  --primary:#12241a;--on-primary:#f1eadc;--accent:#cfaa64;--on-accent:#1b1407;--bad:#a23a2a;--ok:#2f6b46;
  --serif:"Bodoni Moda","Bodoni 72",Didot,Georgia,serif;--sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
  --r:14px;--shadow:0 1px 0 rgba(18,36,26,.04),0 14px 34px -20px rgba(18,36,26,.35);
@@ -350,6 +350,14 @@ td.bar .track i{animation:none}
  td.bar{display:none}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+header.top{background:#fff;color:var(--forest);border-bottom:1px solid var(--line);box-shadow:0 6px 20px -16px rgba(18,36,26,.4)}
+.hin .logo{background:var(--forest);border-radius:12px;padding:6px 10px;margin:4px 0 12px}
+#tabs button{color:#6b766c}#tabs button:hover,#tabs button.on{color:var(--forest)}
+.hr a,.hr button,.sync{color:#5f6a60}.hr a:hover,.hr button:hover{color:var(--forest)}.sync i{border-color:var(--gold-deep)}
+main{background:linear-gradient(180deg,#f4f8f2 0,#fff 260px)}
+.day,.panel,.mcard,.ent>li{border-color:var(--line)}
+.dh{background:linear-gradient(180deg,#f3f7f1,#eef4ec)}
+.H{border-color:var(--gold)}
 </style>
 </head>
 <body>
