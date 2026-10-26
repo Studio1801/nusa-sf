@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex">
+<meta name="robots" content="noindex"><meta name="color-scheme" content="light">
 <title>Nusa Orders</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2312241a'/%3E%3Cpath d='M32 10 54 32 32 54 10 32Z' fill='none' stroke='%23cfaa64' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,8 +17,6 @@
  --r:14px;--shadow:0 1px 0 rgba(18,36,26,.04),0 14px 34px -20px rgba(18,36,26,.35);
  color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0d1711;--card:#132119;--soft:#1a2b20;--soft-2:#22362a;--ink:#eee7d7;--mute:#9ca595;--line:#27382c;--primary:#cfaa64;--on-primary:#17120a;--gold-deep:#dfbb76;--ok:#8fd0a3;--bad:#e8907f;--shadow:0 14px 34px -20px rgba(0,0,0,.6);color-scheme:dark}}
-:root[data-theme=dark]{--bg:#0d1711;--card:#132119;--soft:#1a2b20;--soft-2:#22362a;--ink:#eee7d7;--mute:#9ca595;--line:#27382c;--primary:#cfaa64;--on-primary:#17120a;--gold-deep:#dfbb76;--ok:#8fd0a3;--bad:#e8907f;color-scheme:dark}
 *{box-sizing:border-box;margin:0}
 html,body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -130,7 +128,7 @@ main{max-width:1480px;margin:0 auto;padding:24px 20px 80px}
 .ob .nm{font-size:1.12rem;font-weight:700;line-height:1.25}
 .ob .tt{font-weight:700;font-variant-numeric:tabular-nums}
 .ob .its{margin-top:6px;font-size:1rem;line-height:1.45}
-.ob .its span{color:var(--mute)}
+.ob .its span{color:var(--mute);white-space:nowrap}
 .ob .meta{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:.84rem;color:var(--mute)}
 .ob.dim{opacity:.5}
 .ob.dim .nm{text-decoration:line-through}
@@ -225,8 +223,6 @@ main{max-width:1480px;margin:0 auto;padding:24px 20px 80px}
 .bars .br{display:grid;grid-template-columns:120px 1fr 64px;align-items:center;gap:10px;font-size:.92rem}
 .track{height:12px;border-radius:99px;background:var(--soft);overflow:hidden}
 .track i{display:block;height:100%;border-radius:99px;background:var(--forest);animation:growx .7s cubic-bezier(.2,.8,.2,1) both;transform-origin:left}
-:root[data-theme=dark] .track i{background:var(--gold)}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .track i{background:var(--gold)}}
 @keyframes growx{from{transform:scaleX(0)}}
 .stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
 .stats3 b{display:block;font-family:var(--serif);font-size:1.9rem;font-weight:500;line-height:1.1}
@@ -239,8 +235,6 @@ main{max-width:1480px;margin:0 auto;padding:24px 20px 80px}
 .ph p{color:var(--mute);font-size:.95rem;margin-top:4px;max-width:60ch}
 .ph .acts{display:flex;gap:12px;align-items:center}
 .H{font-family:var(--serif);font-weight:500;font-size:1.45rem;padding-bottom:6px;margin-bottom:14px;border-bottom:2px solid var(--forest)}
-:root[data-theme=dark] .H{border-color:var(--gold)}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .H{border-color:var(--gold)}}
 
 .cev{display:flex;gap:20px;padding:18px 20px}
 .cdate{width:70px;flex:none;text-align:center;padding-top:2px}
@@ -255,8 +249,6 @@ main{max-width:1480px;margin:0 auto;padding:24px 20px 80px}
 .pills{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .pill{padding:6px 14px;border-radius:99px;border:2px solid transparent;color:var(--mute);font-weight:500}
 .pill.on{border-color:var(--forest);color:var(--ink)}
-:root[data-theme=dark] .pill.on{border-color:var(--gold)}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .pill.on{border-color:var(--gold)}}
 .kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}
 .kpis b{display:block;font-family:var(--serif);font-weight:500;font-size:2.4rem;line-height:1.1;font-variant-numeric:tabular-nums}
 .kpis span{font-size:.9rem;color:var(--mute)}
@@ -267,8 +259,6 @@ main{max-width:1480px;margin:0 auto;padding:24px 20px 80px}
 .vb b{font-size:.86rem;font-weight:600;margin-bottom:4px;white-space:nowrap}
 .vb i{display:block;width:100%;border-radius:8px 8px 3px 3px;background:var(--forest);animation:growy .7s cubic-bezier(.2,.8,.2,1) both;transform-origin:bottom}
 .vb i.cur{background:var(--gold)}
-:root[data-theme=dark] .vb i{background:var(--gold)}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .vb i{background:var(--gold)}}
 .vb span{font-size:.76rem;color:var(--mute);margin-top:5px;white-space:nowrap}
 @keyframes growy{from{transform:scaleY(0)}}
 table{width:100%;border-collapse:collapse;font-size:.94rem}
