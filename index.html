@@ -589,6 +589,26 @@ em .w.on{color:var(--gold-deep)}
 @media(max-width:860px),(hover:none){.gal-st{padding-top:5rem}.gslide{width:72vw;max-width:none}.gslide .im{height:auto;aspect-ratio:4/5}.gslide:nth-child(5) .im{aspect-ratio:1;height:auto}}
 @media(max-width:920px){.ann .wrap{justify-content:flex-start;font-size:.74rem}.ann .wrap>span:first-child{overflow:hidden;text-overflow:ellipsis}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.w{color:inherit}.rv.pre{clip-path:none}}
+
+body{margin:0}
+/* hero v6: photo band, then centered headline */
+.hero2{background:var(--paper);color:var(--ink)}
+.hphoto{position:relative;margin-top:var(--hh);height:clamp(260px,42vh,460px);background-size:cover;background-position:50% 42%}
+.hero2 .badge{top:1.4rem;bottom:auto;right:max(24px,5vw);width:132px;height:132px}
+.hero2 .badge img{width:54px;height:54px}
+.hcopy{text-align:center;padding-block:clamp(2.2rem,4.5vw,3.4rem) clamp(2rem,4vw,3rem);display:flex;flex-direction:column;align-items:center}
+.hero2 h1{font-size:clamp(2.9rem,6.4vw,5.8rem);line-height:.98;letter-spacing:-.035em;margin:.5rem 0 1.2rem;color:var(--forest)}
+.hero2 h1 .ln{padding-inline:.12em;margin-inline:-.12em}
+.hero2 h1 em{color:var(--gold-deep)}
+.hero2 .lede{max-width:46ch;font-size:1.12rem;color:var(--mute);margin:0 0 2rem;opacity:1}
+.hero2 .acts{display:flex;gap:1.8rem;align-items:center;justify-content:center;flex-wrap:wrap}
+.hero2 .tl:hover{color:var(--gold-deep)}
+.hero2 .k{color:var(--gold-deep);text-shadow:none}
+.hero2 .hfoot{border-top:1px solid var(--line)}
+.hero2 .hf{color:var(--ink)}
+.hero2 .hf+.hf{border-left-color:var(--line)}
+.hero2 .dot.live{background:var(--leaf);box-shadow:0 0 0 4px rgba(76,138,62,.2)}
+@media(max-width:760px){.hero2 .hf+.hf{border-top-color:var(--line)}.hphoto{height:clamp(240px,40vh,360px)}}
 </style>
 
 <header id="hdr"></header>
@@ -727,11 +747,11 @@ pages.home=()=>{
  const mq=names.map(n=>`<span>${n}</span><i></i>`).join('');
  const drow=(id,img,name,aka)=>{const i=byId(id);return `<li class="drow" data-img="${img}"><div class="dimg" ${bg(img)}></div><div class="dname"><h3>${name}</h3><span class="aka">${aka}</span></div><p>${i.taste}</p><span class="pr">${money(i.price)}${i.max?'+':''}</span><button class="addc" data-act="add" data-id="${id}">Add</button></li>`};
  let layers='';for(let n=0;n<22;n++)layers+=`<div class="layer ${n%2?'b':'a'}" style="--d:${((21-n)*45)}ms"></div>`;
- return `<section class="hero"><div class="hero-bg" ${bg('hero')} role="img" aria-label="Rows of Nusa dessert boxes with 1000 layer cake, kue lapis and nastar"></div>
- <div class="wrap hero-in"><span class="k fade-in">Indonesian kitchen in San Francisco, since 2013</span>
- <h1><span class="ln"><span>Classic</span></span><span class="ln"><span><span class="pimg" ${bg('custard')} aria-hidden="true"></span>flavors</span></span><span class="ln"><span><em>of Indonesia.</em></span></span></h1>
- <div class="hero-row fade-in"><p class="lede">Thousand-layer cake, pandan, palm sugar and slow-cooked rendang. Handmade by chef Jennifer Huang from the recipes she grew up with.</p><div class="acts"><button class="btn btn-gold mag" data-act="go" data-to="order">Start an order</button><button class="tl" data-act="go" data-to="menu">See the menu</button></div></div></div>
- <div class="badge" aria-hidden="true"><svg viewBox="0 0 200 200"><defs><path id="bp" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#bp" textLength="500" lengthAdjust="spacing">Handmade in San Francisco · Since 2013 · Classic flavors of Indonesia ·</textPath></text></svg><img src="${IMG.logo}" alt=""></div>
+ return `<section class="hero2"><div class="hphoto" ${bg('hero')} role="img" aria-label="Rows of Nusa dessert boxes with 1000 layer cake, kue lapis and nastar"><div class="badge" aria-hidden="true"><svg viewBox="0 0 200 200"><defs><path id="bp" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#bp" textLength="500" lengthAdjust="spacing">Handmade in San Francisco · Since 2013 · Classic flavors of Indonesia ·</textPath></text></svg><img src="${IMG.logo}" alt=""></div></div>
+ <div class="wrap hcopy"><span class="k fade-in">Indonesian kitchen in San Francisco, since 2013</span>
+ <h1><span class="ln"><span>Classic flavors</span></span><span class="ln"><span><em>of Indonesia.</em></span></span></h1>
+ <p class="lede fade-in">Thousand-layer cake, pandan, palm sugar and slow-cooked rendang. Handmade by chef Jennifer Huang from the recipes she grew up with.</p>
+ <div class="acts fade-in"><button class="btn btn-ink mag" data-act="go" data-to="order">Start an order</button><button class="tl" data-act="go" data-to="menu">See the menu</button></div></div>
  <div class="wrap hfoot"><div class="hf"><span class="dot${mk&&mk.open?' live':''}"></span><div><b>${mk&&mk.open?'Market open now':'Next market, '+(mk?fmtD(mk.start):'')}</b><span>Ferry Plaza, 8 am to 2 pm</span></div></div><div class="hf"><span class="dot${kt&&kt.open?' live':''}"></span><div><b>Kitchen pickup, ${kt?fmtD(kt.start):''}</b><span>Dogpatch, 5 to 6 pm</span></div></div><div class="hf"><span class="dot"></span><div><b>60+ HubShop spots</b><span>Plus delivery by Neon across the Bay</span></div></div></div></section>
  <div class="mq" aria-hidden="true"><div class="mq-t">${mq}${mq}</div></div>
  <section class="night sec ways"><div class="wrap ways-g"><div><span class="k">Pickup, delivery or catering</span><h2>However you like <em>your Nusa.</em></h2><p class="intro">Choose how you want it. Then it’s one menu and one cart, whichever way you pick.</p>
@@ -862,7 +882,7 @@ let io2;const pinOK=()=>window.matchMedia('(min-width:861px) and (hover:hover)')
 function sizeGal(){const g=$('#gal'),t=$('#gtrack');if(!g||!t)return;if(!pinOK()){g.style.height='';return}const extra=Math.max(0,t.scrollWidth-innerWidth);g.dataset.extra=extra;g.style.height=(innerHeight+extra)+'px'}
 function placeInd(){const t=$('.tab.on'),ind=$('#tabind'),box=$('#tabs');if(!t||!ind)return;ind.style.left=t.offsetLeft+'px';ind.style.width=t.offsetWidth+'px';const l=t.offsetLeft-box.clientWidth/2+t.offsetWidth/2;box.scrollTo({left:l,behavior:'smooth'})}
 let ticking=false;
-function onScroll(){ticking=false;const h=$('#hdr'),y=window.scrollY;h.classList.toggle('shrunk',y>30);h.classList.toggle('filled',y>30||!['home','catering','story'].includes(S.route));
+function onScroll(){ticking=false;const h=$('#hdr'),y=window.scrollY;h.classList.toggle('shrunk',y>30);h.classList.toggle('filled',y>30||!['catering','story'].includes(S.route));
  const p=$('#par');if(p){const r=p.parentElement.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)p.style.transform=`translateY(${(r.top+r.height/2-innerHeight/2)*-.12}px)`}
  const g=$('#gal');if(g&&pinOK()){const r=g.getBoundingClientRect(),ex=+g.dataset.extra||0,p=Math.min(1,Math.max(0,-r.top/Math.max(1,r.height-innerHeight)));$('#gtrack').style.transform=`translateX(${-p*ex}px)`;const gb=$('#gbar');if(gb)gb.style.width=(p*100)+'%'}
  const rv=$('#reveal');if(rv){const r=rv.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight*.9-r.top)/(r.height+innerHeight*.4))),ws=rv.querySelectorAll('.w'),n=Math.round(p*ws.length);ws.forEach((w,k)=>w.classList.toggle('on',k<n))}
